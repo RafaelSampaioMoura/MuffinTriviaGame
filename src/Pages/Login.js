@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      playerName: "",
-      playerEmail: "",
+      playerName: '',
+      playerEmail: '',
     };
   }
 
@@ -31,30 +31,31 @@ class Login extends Component {
       <>
         <h3>Login</h3>
         <form>
-          <label htmlFor='input-player-name'>
+          <label htmlFor="input-player-name">
             Nome:
             <input
-              type='text'
-              name='playerName'
-              id='input-player-name'
-              data-testid='input-player-name'
-              onChange={this.handleInput}
+              type="text"
+              name="playerName"
+              id="input-player-name"
+              data-testid="input-player-name"
+              onChange={ this.handleInput }
             />
           </label>
-          <label htmlFor='input-gravatar-email'>Email:
+          <label htmlFor="input-gravatar-email">
+            Email:
             <input
-              type='email'
-              name='playerEmail'
-              id='input-gravatar-email'
-              data-testid='input-gravatar-email'
-              onChange={this.handleInput}
+              type="email"
+              name="playerEmail"
+              id="input-gravatar-email"
+              data-testid="input-gravatar-email"
+              onChange={ this.handleInput }
             />
           </label>
           <button
-            type='submit'
-            data-testid='btn-play'
-            onClick={this.handleSubmit}
-            disabled={!enable}
+            type="submit"
+            data-testid="btn-play"
+            onClick={ this.handleSubmit }
+            disabled={ !enable }
           >
             Play
           </button>
