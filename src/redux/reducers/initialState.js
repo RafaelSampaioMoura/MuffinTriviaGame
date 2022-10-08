@@ -7,6 +7,8 @@ const INITIAL_STATE = {
   },
   ranking: [],
   token: '',
+  responseCode: 0,
+  isFetching: false,
 };
 
 export default INITIAL_STATE;
