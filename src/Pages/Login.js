@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Login extends Component {
   constructor(props) {
@@ -18,6 +19,11 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+  };
+
+  btnSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
   };
 
   render() {
@@ -59,10 +65,23 @@ class Login extends Component {
           >
             Play
           </button>
+          <button
+            data-testid="btn-settings"
+            type="submit"
+            onClick={ this.btnSettings }
+          >
+            Settings
+          </button>
         </form>
       </>
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default Login;
