@@ -24,7 +24,6 @@ class Login extends Component {
     e.preventDefault();
     const { dispatch, history } = this.props;
     dispatch(fetchToken());
-    localStorage.setItem('token', localToken);
     history.push('/jogo');
   };
 
