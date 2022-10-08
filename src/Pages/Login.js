@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+// import getToken from '../services/tokenAPI';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fetchToken } from '../redux/actions';
 
 class Login extends Component {
   constructor(props) {
@@ -17,8 +20,11 @@ class Login extends Component {
     });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
+    const { dispatch, history } = this.props;
+    dispatch(fetchToken());
+    history.push('/jogo');
   };
 
   btnSettings = () => {
@@ -33,6 +39,8 @@ class Login extends Component {
       .toLowerCase()
       .match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
     const enable = playerNameValidation && playerEmailValidation;
+    // console.log(fetchToken());
+    // console.log(this.props);
     return (
       <>
         <h3>Login</h3>
@@ -78,10 +86,16 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  token: state.tokenReducer.token,
+  responseCode: state.tokenReducer.responseCode,
+});
+
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default connect(mapStateToProps, null)(Login);
