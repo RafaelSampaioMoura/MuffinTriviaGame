@@ -92,7 +92,6 @@ const mapStateToProps = (state) => ({
   responseCode: state.tokenReducer.responseCode,
 });
 
-
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
