@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import getToken from '../services/tokenAPI';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { fetchToken } from '../redux/actions';
+import PropTypes from 'prop-types';
 
 class Login extends Component {
   constructor(props) {
@@ -26,6 +26,11 @@ class Login extends Component {
     dispatch(fetchToken());
     localStorage.setItem('token', localToken);
     history.push('/jogo');
+  };
+
+  btnSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
   };
 
   render() {
@@ -69,6 +74,13 @@ class Login extends Component {
           >
             Play
           </button>
+          <button
+            data-testid="btn-settings"
+            type="submit"
+            onClick={ this.btnSettings }
+          >
+            Settings
+          </button>
         </form>
       </>
     );
@@ -80,10 +92,11 @@ const mapStateToProps = (state) => ({
   responseCode: state.tokenReducer.responseCode,
 });
 
-Login.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.shape([]).isRequired,
 
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, null)(Login);
