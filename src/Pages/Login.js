@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import getToken from '../services/tokenAPI';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchToken } from '../redux/actions';
+import { fetchToken, submitPlayerInfo } from '../redux/actions';
 
 class Login extends Component {
   constructor(props) {
@@ -22,7 +22,9 @@ class Login extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
+    // const { playerName, playerEmail } = this.state;
     const { dispatch, history } = this.props;
+    dispatch(submitPlayerInfo({ ...this.state }));
     dispatch(fetchToken());
     history.push('/jogo');
   };

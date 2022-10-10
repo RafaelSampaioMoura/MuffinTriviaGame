@@ -1,8 +1,14 @@
 import getToken from '../../services/tokenAPI';
 
+export const SUBMIT_PLAYER_INFO = 'SUBMIT_PLAYER_INFO';
 export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const SUCCESS_TOKEN = 'SUCCESS_TOKEN';
 export const FAILURE_TOKEN = 'FAILURE_TOKEN';
+
+export const submitPlayerInfo = (payload) => ({
+  type: SUBMIT_PLAYER_INFO,
+  payload,
+});
 
 const requestToken = () => ({
   type: REQUEST_TOKEN,
