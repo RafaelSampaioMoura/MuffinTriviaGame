@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
-import md5 from 'crypto-js/md5';
 import {
   FAILURE_TOKEN,
   REQUEST_TOKEN,
   SUCCESS_TOKEN,
   SUBMIT_PLAYER_INFO,
+  GET_QUESTIONS,
 } from '../actions';
+import INITIAL_QUESTIONS_STATE from './initialQuestionsState';
 import INITIAL_STATE from './initialState';
 
 const playerInfoReducer = (state = INITIAL_STATE.player, action) => {
@@ -14,7 +15,7 @@ const playerInfoReducer = (state = INITIAL_STATE.player, action) => {
     return {
       ...state,
       name: action.payload.playerName,
-      gravatarEmail: md5(action.payload.playerEmail).toString(),
+      gravatarEmail: action.payload.playerEmail,
     };
   default:
     return state;
@@ -32,7 +33,6 @@ const tokenReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       token: action.payload.token,
-      responseCode: action.payload.response_code,
       isFetching: false,
     };
   case FAILURE_TOKEN:
@@ -46,6 +46,21 @@ const tokenReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-const rootReducer = combineReducers({ playerInfoReducer, tokenReducer });
+const questionsReducer = (state = INITIAL_QUESTIONS_STATE, action) => {
+  switch (action.type) {
+  case GET_QUESTIONS:
+    return {
+      ...state,
+      code: action.payload.response_code,
+      questions: action.payload.results,
+    };
+  default:
+    return state;
+  }
+};
+
+const rootReducer = combineReducers({
+  playerInfoReducer, tokenReducer, questionsReducer,
+});
 
 export default rootReducer;
