@@ -26,7 +26,7 @@ class Login extends Component {
     const { dispatch, history } = this.props;
     dispatch(submitPlayerInfo({ ...this.state }));
     dispatch(fetchToken());
-    history.push('/jogo');
+    history.push('/game');
   };
 
   btnSettings = () => {
@@ -90,7 +90,7 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token,
-  responseCode: state.tokenReducer.responseCode,
+  // responseCode: state.tokenReducer.responseCode,
 });
 
 Login.propTypes = {
