@@ -22,10 +22,9 @@ class Login extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    // const { playerName, playerEmail } = this.state;
     const { dispatch, history } = this.props;
-    dispatch(submitPlayerInfo({ ...this.state }));
-    dispatch(fetchToken());
+    await dispatch(submitPlayerInfo({ ...this.state }));
+    await dispatch(fetchToken());
     history.push('/game');
   };
 
@@ -41,8 +40,6 @@ class Login extends Component {
       .toLowerCase()
       .match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
     const enable = playerNameValidation && playerEmailValidation;
-    // console.log(fetchToken());
-    // console.log(this.props);
     return (
       <>
         <h3>Login</h3>
@@ -90,7 +87,6 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token,
-  // responseCode: state.tokenReducer.responseCode,
 });
 
 Login.propTypes = {
