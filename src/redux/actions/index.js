@@ -11,15 +11,6 @@ export const submitPlayerInfo = (payload) => ({
   payload,
 });
 
-const requestToken = () => ({
-  type: REQUEST_TOKEN,
-});
-
-const successToken = (payload) => ({
-  type: SUCCESS_TOKEN,
-  payload,
-});
-
 const failureToken = (errorMessage) => ({
   type: FAILURE_TOKEN,
   error: errorMessage,
@@ -30,27 +21,30 @@ const getQuestions = (payload) => ({
   payload,
 });
 
-export const fetchToken = () => async (dispatch) => {
-  dispatch(requestToken());
-
-  try {
-    const response = await getToken();
-    console.log(response.token);
-    localStorage.setItem('token', response.token);
-    dispatch(successToken(response));
-  } catch (error) {
-    const errorAction = failureToken(error);
-    dispatch(errorAction);
-  }
-};
-
 export const getQuestionsFromApi = (token) => async (dispatch) => {
   try {
     const URL_QUESTIONS = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const response = await fetch(URL_QUESTIONS);
     const data = await response.json();
+
+    localStorage.setItem('errorCode', data.response_code);
+    localStorage.setItem('questions', JSON.stringify(data.results));
     dispatch(getQuestions(data));
+    console.log('getQuestions');
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const fetchToken = () => async (dispatch) => {
+  try {
+    const response = await getToken();
+    localStorage.setItem('token', response.token);
+    // await dispatch(getQuestionsFromApi());
+    // dispatch(successToken(response));
+    console.log('FetchToken');
+  } catch (error) {
+    const errorAction = failureToken(error);
+    dispatch(errorAction);
   }
 };
