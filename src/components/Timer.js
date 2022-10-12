@@ -29,6 +29,7 @@ function Timer(props) {
 
 Timer.propTypes = {
   handleAnswer: PropTypes.func.isRequired,
+  reset: PropTypes.bool.isRequired,
 };
 
 export default Timer;
