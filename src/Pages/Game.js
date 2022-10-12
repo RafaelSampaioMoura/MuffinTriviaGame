@@ -11,6 +11,7 @@ class Game extends Component {
     answerLocal: [],
     correctAnswer: '',
     loading: false,
+    isActive: false,
   };
 
   async componentDidMount() {
@@ -64,8 +65,14 @@ class Game extends Component {
     return shuffledArray;
   };
 
+  handleAnswer = () => {
+    this.setState((prevState) => ({
+      isActive: !prevState.isActive,
+    }));
+  };
+
   render() {
-    const { answerLocal, correctAnswer, currentQuestion, loading } = this.state;
+    const { answerLocal, correctAnswer, currentQuestion, loading, isActive } = this.state;
     return (
       <div>
         <Header />
@@ -85,7 +92,10 @@ class Game extends Component {
                     data-testid="correct-answer"
                     type="button"
                     key={ answer }
-                    style={ { backgroundColor: 'rgb(6, 240, 15)' } }
+                    onClick={ this.handleAnswer }
+                    style={ {
+                      border: isActive ? '3px solid rgb(6, 240, 15)' : '',
+                    } }
                   >
                     {answer}
                   </button>)
@@ -94,6 +104,10 @@ class Game extends Component {
                     data-testid={ `wrong-answer-${index}` }
                     type="button"
                     key={ answer }
+                    onClick={ this.handleAnswer }
+                    style={ {
+                      border: isActive ? '3px solid red' : '',
+                    } }
                   >
                     {answer}
                   </button>)
