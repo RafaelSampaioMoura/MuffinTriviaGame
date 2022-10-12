@@ -14,6 +14,7 @@ class Game extends Component {
     loading: false,
     isActive: false,
     currentQuestionIndex: 0,
+    reset: false,
   };
 
   async componentDidMount() {
@@ -44,18 +45,24 @@ class Game extends Component {
 
   handleCurrentQuestion = async () => {
     const { questionsLocal, currentQuestionIndex } = this.state;
-    console.log(questionsLocal);
-    const answersShuffled = this.shuffleArray([
-      questionsLocal[currentQuestionIndex].correct_answer,
-      ...questionsLocal[currentQuestionIndex].incorrect_answers,
-    ]);
-    this.setState({
-      currentQuestion: questionsLocal[currentQuestionIndex],
-      answerLocal: answersShuffled,
-      correctAnswer: questionsLocal[currentQuestionIndex].correct_answer,
-      loading: false,
-      isActive: false,
-    });
+    const maxQuestions = 5;
+    // console.log(questionsLocal);
+    if (currentQuestionIndex < maxQuestions) {
+      const answersShuffled = this.shuffleArray([
+        questionsLocal[currentQuestionIndex].correct_answer,
+        ...questionsLocal[currentQuestionIndex].incorrect_answers,
+      ]);
+      this.setState({
+        currentQuestion: questionsLocal[currentQuestionIndex],
+        answerLocal: answersShuffled,
+        correctAnswer: questionsLocal[currentQuestionIndex].correct_answer,
+        loading: false,
+        isActive: false,
+      });
+    } else {
+      const { history } = this.props;
+      history.push('/feedback');
+    }
   };
 
   shuffleArray = (questionsArray) => {
@@ -97,9 +104,19 @@ class Game extends Component {
     // console.log(score);
   };
 
+  handleResetCounter = () => {
+    const { reset } = this.state;
+    this.setState((prevState) => ({
+      reset: !prevState.state,
+    }));
+    console.log(reset);
+  };
+
   handleNextQuestion = () => {
+    this.handleResetCounter();
     this.setState((prevState) => ({
       currentQuestionIndex: prevState.currentQuestionIndex + 1,
+      reset: !prevState.state,
     }));
     this.handleRedirect();
   };
@@ -110,13 +127,16 @@ class Game extends Component {
       currentQuestion,
       loading,
       isActive,
+      initCounter,
+      reset,
     } = this.state;
 
     return (
       <div>
         <Timer
           handleAnswer={ this.handleAnswer }
-          difficulty={ currentQuestion.difficulty }
+          reset={ reset }
+          initCounter={ initCounter }
         />
         <Header />
         {loading && <p>Loading...</p>}
