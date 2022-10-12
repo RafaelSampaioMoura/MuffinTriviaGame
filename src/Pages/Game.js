@@ -13,6 +13,7 @@ class Game extends Component {
     correctAnswer: '',
     loading: false,
     isActive: false,
+    currentQuestionIndex: 0,
   };
 
   async componentDidMount() {
@@ -42,17 +43,18 @@ class Game extends Component {
   };
 
   handleCurrentQuestion = async () => {
-    const { questionsLocal } = this.state;
+    const { questionsLocal, currentQuestionIndex } = this.state;
     console.log(questionsLocal);
     const answersShuffled = this.shuffleArray([
-      questionsLocal[0].correct_answer,
-      ...questionsLocal[0].incorrect_answers,
+      questionsLocal[currentQuestionIndex].correct_answer,
+      ...questionsLocal[currentQuestionIndex].incorrect_answers,
     ]);
     this.setState({
-      currentQuestion: questionsLocal[0],
+      currentQuestion: questionsLocal[currentQuestionIndex],
       answerLocal: answersShuffled,
-      correctAnswer: questionsLocal[0].correct_answer,
+      correctAnswer: questionsLocal[currentQuestionIndex].correct_answer,
       loading: false,
+      isActive: false,
     });
   };
 
@@ -93,6 +95,13 @@ class Game extends Component {
     // console.log(score);
     dispatch(submitPlayerScore(totalPoints));
     // console.log(score);
+  };
+
+  handleNextQuestion = () => {
+    this.setState((prevState) => ({
+      currentQuestionIndex: prevState.currentQuestionIndex + 1,
+    }));
+    this.handleRedirect();
   };
 
   render() {
@@ -157,6 +166,14 @@ class Game extends Component {
                   </button>)
             ))}
           </div>
+          { isActive ? (
+            <button
+              data-testid="btn-next"
+              onClick={ this.handleNextQuestion }
+              type="button"
+            >
+              Next
+            </button>) : ''}
         </div>
       </div>
     );
