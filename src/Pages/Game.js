@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Timer from '../components/Timer';
 import Header from '../components/Header';
 import { getQuestionsFromApi } from '../redux/actions';
 
@@ -19,7 +20,6 @@ class Game extends Component {
     const token = localStorage.getItem('token');
     await dispatch(getQuestionsFromApi(token));
     this.handleRedirect();
-    // console.log(response);
   }
 
   handleRedirect = async () => {
@@ -72,9 +72,15 @@ class Game extends Component {
   };
 
   render() {
-    const { answerLocal, correctAnswer, currentQuestion, loading, isActive } = this.state;
+    const { answerLocal,
+      correctAnswer,
+      currentQuestion,
+      loading,
+      isActive } = this.state;
+
     return (
       <div>
+        <Timer handleAnswer={ this.handleAnswer } />
         <Header />
         {loading && <p>Loading...</p>}
         <div>
@@ -96,6 +102,7 @@ class Game extends Component {
                     style={ {
                       border: isActive ? '3px solid rgb(6, 240, 15)' : '',
                     } }
+                    disabled={ isActive }
                   >
                     {answer}
                   </button>)
@@ -108,6 +115,7 @@ class Game extends Component {
                     style={ {
                       border: isActive ? '3px solid red' : '',
                     } }
+                    disabled={ isActive }
                   >
                     {answer}
                   </button>)
