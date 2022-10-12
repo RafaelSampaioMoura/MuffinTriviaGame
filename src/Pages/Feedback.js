@@ -14,7 +14,7 @@ class Feedback extends Component {
         <Header />
         { assertions >= acceptableLimit
           ? <h2 data-testid="feedback-text">Well done!</h2>
-          : <h2 data-testid="feedback=text">Could be better...</h2>}
+          : <h2 data-testid="feedback-text">Could be better...</h2>}
         <div>
           <h3 data-testid="feedback-total-score">
             Pontuação :

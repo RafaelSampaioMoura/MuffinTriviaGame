@@ -1,6 +1,7 @@
 import getToken from '../../services/tokenAPI';
 
 export const SUBMIT_PLAYER_INFO = 'SUBMIT_PLAYER_INFO';
+export const SUBMIT_PLAYER_SCORE = 'SUBMIT_PLAYER_SCORE';
 export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const SUCCESS_TOKEN = 'SUCCESS_TOKEN';
 export const FAILURE_TOKEN = 'FAILURE_TOKEN';
@@ -8,6 +9,11 @@ export const GET_QUESTIONS = 'GET_QUESTIONS';
 
 export const submitPlayerInfo = (payload) => ({
   type: SUBMIT_PLAYER_INFO,
+  payload,
+});
+
+export const submitPlayerScore = (payload) => ({
+  type: SUBMIT_PLAYER_SCORE,
   payload,
 });
 
