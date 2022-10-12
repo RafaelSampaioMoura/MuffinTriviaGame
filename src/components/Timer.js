@@ -18,8 +18,7 @@ function Timer(props) {
   }, [counter, handleAnswer]);
 
   return (
-    <div>
-      Countdown:
+    <div id="timer">
       {counter}
     </div>
   );

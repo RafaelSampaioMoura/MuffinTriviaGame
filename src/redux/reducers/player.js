@@ -1,19 +1,7 @@
-import { SUBMIT_PLAYER_INFO } from '../actions';
+import INITIAL_STATE from './initialState';
+import { SUBMIT_PLAYER_INFO, SUBMIT_PLAYER_SCORE } from '../actions';
 
-const INITIAL_STATE = {
-  player: {
-    name: '',
-    assertions: 0,
-    score: 0,
-    gravatarEmail: '',
-  },
-  ranking: [],
-  token: '',
-  responseCode: 0,
-  isFetching: false,
-};
-
-const playerInfoReducer = (state = INITIAL_STATE.player, action) => {
+const player = (state = INITIAL_STATE.player, action) => {
   switch (action.type) {
   case SUBMIT_PLAYER_INFO:
     return {
@@ -21,9 +9,14 @@ const playerInfoReducer = (state = INITIAL_STATE.player, action) => {
       name: action.payload.playerName,
       gravatarEmail: action.payload.playerEmail,
     };
+  case SUBMIT_PLAYER_SCORE:
+    return {
+      ...state,
+      score: action.payload,
+    };
   default:
     return state;
   }
 };
 
-export default playerInfoReducer;
+export default player;

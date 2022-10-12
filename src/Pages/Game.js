@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Timer from '../components/Timer';
 import Header from '../components/Header';
-import { getQuestionsFromApi } from '../redux/actions';
+import { getQuestionsFromApi, submitPlayerScore } from '../redux/actions';
 
 class Game extends Component {
   state = {
@@ -71,16 +71,44 @@ class Game extends Component {
     }));
   };
 
+  handlePonctuation = (questionDifficulty, timer) => {
+    // const { isActive } = this.state;
+    const { dispatch, score } = this.props;
+    const hard = 3;
+    const medium = 2;
+    const easy = 1;
+    let difficultyPoints;
+
+    if (questionDifficulty === 'hard') {
+      difficultyPoints = hard;
+    } else if (questionDifficulty === 'easy') {
+      difficultyPoints = easy;
+    } else {
+      difficultyPoints = medium;
+    }
+    const basePoints = 10;
+    const totalPoints = score + (basePoints + (difficultyPoints * timer));
+    // console.log(questionDifficulty);
+    // console.log(totalPoints);
+    // console.log(score);
+    dispatch(submitPlayerScore(totalPoints));
+    // console.log(score);
+  };
+
   render() {
     const { answerLocal,
       correctAnswer,
       currentQuestion,
       loading,
-      isActive } = this.state;
+      isActive,
+    } = this.state;
 
     return (
       <div>
-        <Timer handleAnswer={ this.handleAnswer } />
+        <Timer
+          handleAnswer={ this.handleAnswer }
+          difficulty={ currentQuestion.difficulty }
+        />
         <Header />
         {loading && <p>Loading...</p>}
         <div>
@@ -98,9 +126,17 @@ class Game extends Component {
                     data-testid="correct-answer"
                     type="button"
                     key={ answer }
-                    onClick={ this.handleAnswer }
+                    onClick={ () => {
+                      const timerCount = Number(
+                        document.querySelector('#timer').textContent,
+                      );
+                      // console.log(timerCount);
+                      this.handleAnswer();
+                      this.handlePonctuation(currentQuestion.difficulty, timerCount);
+                    } }
                     style={ {
-                      border: isActive ? '3px solid rgb(6, 240, 15)' : '',
+                      // border: isActive ? '3px solid rgb(6, 240, 15)' : '',
+                      border: '3px solid rgb(6, 240, 15)',
                     } }
                     disabled={ isActive }
                   >
@@ -111,7 +147,7 @@ class Game extends Component {
                     data-testid={ `wrong-answer-${index}` }
                     type="button"
                     key={ answer }
-                    onClick={ this.handleAnswer }
+                    onClick={ () => { this.handleAnswer(); } }
                     style={ {
                       border: isActive ? '3px solid red' : '',
                     } }
@@ -136,11 +172,13 @@ Game.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   questions: state.questionsReducer,
   token: state.tokenReducer.token,
+  score: state.player.score,
 });
 
 export default connect(mapStateToProps)(Game);
