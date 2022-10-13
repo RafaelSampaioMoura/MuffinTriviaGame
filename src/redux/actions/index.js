@@ -6,6 +6,7 @@ export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const SUCCESS_TOKEN = 'SUCCESS_TOKEN';
 export const FAILURE_TOKEN = 'FAILURE_TOKEN';
 export const GET_QUESTIONS = 'GET_QUESTIONS';
+export const PLAYER_RANKING = 'PLAYER_RANKING';
 
 export const submitPlayerInfo = (payload) => ({
   type: SUBMIT_PLAYER_INFO,
@@ -14,6 +15,11 @@ export const submitPlayerInfo = (payload) => ({
 
 export const submitPlayerScore = (payload) => ({
   type: SUBMIT_PLAYER_SCORE,
+  payload,
+});
+
+export const submitPlayerRanking = (payload) => ({
+  type: PLAYER_RANKING,
   payload,
 });
 

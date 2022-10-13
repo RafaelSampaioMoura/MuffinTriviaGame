@@ -1,17 +1,5 @@
 import { FAILURE_TOKEN, REQUEST_TOKEN, SUCCESS_TOKEN } from '../actions';
-
-const INITIAL_STATE = {
-  player: {
-    name: '',
-    assertions: 0,
-    score: 0,
-    gravatarEmail: '',
-  },
-  ranking: [],
-  token: '',
-  responseCode: 0,
-  isFetching: false,
-};
+import INITIAL_STATE from './initialState';
 
 const tokenReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {

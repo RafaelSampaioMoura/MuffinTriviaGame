@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Timer from '../components/Timer';
 import Header from '../components/Header';
-import { getQuestionsFromApi, submitPlayerScore } from '../redux/actions';
+import { getQuestionsFromApi,
+  submitPlayerScore,
+  submitPlayerRanking } from '../redux/actions';
 
 class Game extends Component {
   state = {
@@ -60,7 +62,9 @@ class Game extends Component {
         isActive: false,
       });
     } else {
-      const { history } = this.props;
+      const { history, player, dispatch } = this.props;
+      // console.log(player);
+      dispatch(submitPlayerRanking(player));
       history.push('/feedback');
     }
   };
@@ -203,19 +207,26 @@ class Game extends Component {
 Game.propTypes = {
   questions: PropTypes.shape({
     questions: PropTypes.arrayOf(PropTypes.shape).isRequired,
-    code: PropTypes.number.isRequired,
+    code: PropTypes.string.isRequired,
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
+  player: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+    assertions: PropTypes.number.isRequired,
+    gravatarEmail: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   questions: state.questionsReducer,
   token: state.tokenReducer.token,
   score: state.player.score,
+  player: state.player,
 });
 
 export default connect(mapStateToProps)(Game);
