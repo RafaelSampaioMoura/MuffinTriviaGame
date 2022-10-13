@@ -36,7 +36,6 @@ export const getQuestionsFromApi = (token) => async (dispatch) => {
     localStorage.setItem('errorCode', data.response_code);
     localStorage.setItem('questions', JSON.stringify(data.results));
     dispatch(getQuestions(data));
-    console.log('getQuestions');
   } catch (error) {
     console.log(error);
   }
@@ -46,9 +45,6 @@ export const fetchToken = () => async (dispatch) => {
   try {
     const response = await getToken();
     localStorage.setItem('token', response.token);
-    // await dispatch(getQuestionsFromApi());
-    // dispatch(successToken(response));
-    console.log('FetchToken');
   } catch (error) {
     const errorAction = failureToken(error);
     dispatch(errorAction);

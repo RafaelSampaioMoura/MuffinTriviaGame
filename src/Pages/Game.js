@@ -139,7 +139,7 @@ class Game extends Component {
           {loading && <p>Loading...</p>}
           <div
             className="card flex flex-wrap
-          w-1/3 h-64 ml-16 mt-32 pt-12 pb-12
+          w-1/3 h-96 ml-16 mt-32 pt-12 pb-12
           bg-slate-100 text-slate-900"
           >
             <div
@@ -213,6 +213,8 @@ class Game extends Component {
                 data-testid="btn-next"
                 onClick={ this.handleNextQuestion }
                 type="button"
+                className="btn btn-primary my-2
+                disabled:bg-slate-200 disabled:text-slate-400"
               >
                 Next
               </button>) : ''}
