@@ -132,22 +132,45 @@ class Game extends Component {
     } = this.state;
 
     return (
-      <div>
-        <Timer
-          handleAnswer={ this.handleAnswer }
-          reset={ reset }
-          initCounter={ initCounter }
-        />
+      <div className="bg-hero bg-cover w-screen h-screen text-white">
         <Header />
-        {loading && <p>Loading...</p>}
-        <div>
-          <h1 data-testid="question-category">
-            {currentQuestion.category}
-          </h1>
-          <h2 data-testid="question-text">
-            {currentQuestion.question}
-          </h2>
-          <div data-testid="answer-options" id="teste">
+        <div className="flex flex-wrap flex-row w-full h-full mx-0">
+
+          {loading && <p>Loading...</p>}
+          <div
+            className="card flex flex-wrap
+          w-1/3 h-64 ml-16 mt-32 pt-12 pb-12
+          bg-slate-100 text-slate-900"
+          >
+            <div
+              className="flex flex-wrap justify-center rounded-xl bg-orange-400
+               text-center -mt-10 mb-12 mx-12"
+            >
+              <h1
+                data-testid="question-category"
+                className="text-2xl text-center"
+              >
+                {currentQuestion.category}
+              </h1>
+            </div>
+            <div className="flex flex-wrap justify-center align-center mx-auto">
+              <h2 data-testid="question-text" className="text-xl px-4">
+                {currentQuestion.question}
+              </h2>
+            </div>
+            <div className="mt-12 text-center">
+              <Timer
+                handleAnswer={ this.handleAnswer }
+                reset={ reset }
+                initCounter={ initCounter }
+              />
+            </div>
+          </div>
+          <div
+            data-testid="answer-options"
+            id="teste"
+            className="flex flex-wrap flex-col w-1/3 mt-36 mx-auto"
+          >
             {answerLocal.map((answer, index) => (
               answer === correctAnswer
                 ? (
@@ -159,15 +182,14 @@ class Game extends Component {
                       const timerCount = Number(
                         document.querySelector('#timer').textContent,
                       );
-                      // console.log(timerCount);
                       this.handleAnswer();
                       this.handlePonctuation(currentQuestion.difficulty, timerCount);
                     } }
                     style={ {
-                      // border: isActive ? '3px solid rgb(6, 240, 15)' : '',
-                      border: '3px solid rgb(6, 240, 15)',
+                      border: isActive ? '3px solid rgb(6, 240, 15)' : '',
                     } }
                     disabled={ isActive }
+                    className="btn my-2 disabled:bg-slate-200 disabled:text-slate-400"
                   >
                     {answer}
                   </button>)
@@ -181,19 +203,20 @@ class Game extends Component {
                       border: isActive ? '3px solid red' : '',
                     } }
                     disabled={ isActive }
+                    className="btn my-2 disabled:bg-slate-200 disabled:text-slate-400"
                   >
                     {answer}
                   </button>)
             ))}
+            { isActive ? (
+              <button
+                data-testid="btn-next"
+                onClick={ this.handleNextQuestion }
+                type="button"
+              >
+                Next
+              </button>) : ''}
           </div>
-          { isActive ? (
-            <button
-              data-testid="btn-next"
-              onClick={ this.handleNextQuestion }
-              type="button"
-            >
-              Next
-            </button>) : ''}
         </div>
       </div>
     );

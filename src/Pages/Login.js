@@ -41,34 +41,60 @@ class Login extends Component {
       .match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
     const enable = playerNameValidation && playerEmailValidation;
     return (
-      <>
-        <h3>Login</h3>
-        <form>
-          <label htmlFor="input-player-name">
-            Nome:
-            <input
-              type="text"
-              name="playerName"
-              id="input-player-name"
-              data-testid="input-player-name"
-              onChange={ this.handleInput }
-            />
-          </label>
-          <label htmlFor="input-gravatar-email">
-            Email:
-            <input
-              type="email"
-              name="playerEmail"
-              id="input-gravatar-email"
-              data-testid="input-gravatar-email"
-              onChange={ this.handleInput }
-            />
-          </label>
+
+      <div
+        className="
+      flex flex-col flex-wrap w-screen h-screen pt-36
+      justify-center align-center bg-green-200
+      bg-hero bg-cover"
+      >
+        <form className="form flex flex-col gap-4 mx-auto">
+          <img
+            src="../img/image.png"
+            className="w-40 mx-auto"
+            alt="logo"
+          />
+          {/* <h3 className="text-4xl text-center w-full text-white">Login</h3> */}
+          <div
+            className="
+            flex flex-col flex-wrap mx-auto justify-center align-center gap-2
+          "
+          >
+            <label
+              htmlFor="input-player-name"
+              className="text-white"
+            >
+              Nome:
+              <input
+                type="text"
+                name="playerName"
+                id="input-player-name"
+                data-testid="input-player-name"
+                onChange={ this.handleInput }
+                className="input input-bordered"
+              />
+            </label>
+            <label
+              htmlFor="input-gravatar-email"
+              className="justify-self-end text-white"
+            >
+              Email:
+              <input
+                type="email"
+                name="playerEmail"
+                id="input-gravatar-email"
+                data-testid="input-gravatar-email"
+                onChange={ this.handleInput }
+                className="input input-bordered ml-1"
+              />
+            </label>
+          </div>
           <button
             type="submit"
             data-testid="btn-play"
             onClick={ this.handleSubmit }
             disabled={ !enable }
+            className="btn btn-primary disabled:bg-slate-200 disabled:text-slate-400"
           >
             Play
           </button>
@@ -76,11 +102,12 @@ class Login extends Component {
             data-testid="btn-settings"
             type="submit"
             onClick={ this.btnSettings }
+            className="btn btn-secondary"
           >
             Settings
           </button>
         </form>
-      </>
+      </div>
     );
   }
 }

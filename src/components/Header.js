@@ -21,18 +21,46 @@ class Header extends Component {
   render() {
     const { player: { name, score } } = this.props;
     return (
-      <div>
+      <div
+        className="
+      flex flex-wrap flex-row
+      justify-end gap-12 align-center pr-16
+      bg-slate-100 text-slate-900
+      py-4"
+      >
         <img
           src={ this.handleImg() }
           alt="gravatar-imagen"
           data-testid="header-profile-picture"
+          className="w-24 mask mask-hexagon"
         />
-        <span data-testid="header-player-name">{ name }</span>
-        <span data-testid="header-score">{ score }</span>
+        <span
+          data-testid="header-player-name"
+          className="self-center font-bold text-lg"
+        >
+          { name }
+
+        </span>
+        <div className="rating">
+          <input
+            type="radio"
+            name="rating-2"
+            className="mask mask-star-2 bg-orange-400 self-center -mr-10"
+
+          />
+        </div>
+        <span
+          data-testid="header-score"
+          className="self-center font-bold text-lg"
+        >
+          { score }
+
+        </span>
         <button
           type="button"
           data-testid="btn-ranking"
           onClick={ this.handleClick }
+          className="btn btn-info self-center"
         >
           Ranking
 
