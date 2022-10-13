@@ -71,7 +71,7 @@ class Login extends Component {
                 id="input-player-name"
                 data-testid="input-player-name"
                 onChange={ this.handleInput }
-                className="input input-bordered"
+                className="input input-bordered text-black"
               />
             </label>
             <label
@@ -85,7 +85,7 @@ class Login extends Component {
                 id="input-gravatar-email"
                 data-testid="input-gravatar-email"
                 onChange={ this.handleInput }
-                className="input input-bordered ml-1"
+                className="input input-bordered ml-1 text-black"
               />
             </label>
           </div>

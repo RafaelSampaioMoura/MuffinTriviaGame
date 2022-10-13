@@ -21,13 +21,9 @@ function Timer(props) {
   }, [counter, handleAnswer, reset]);
 
   return (
-    // <div id="timer" className="countdown font-mono text-2xl">
-    //   {/* <span style={counter}></span> */}
-    //   Tempo:
-    //   <span style={ { '--value': counter } } id="timer">{counter}</span>
-    // </div>
-    <div id="timer" className="countdown font-mono text-2xl">
-      {counter}
+    <div className="countdown font-mono text-2xl">
+      Tempo:
+      <span style={ { '--value': counter } } id="timer">{counter}</span>
     </div>
   );
 }
