@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Header from '../Components/Header';
+import Header from '../components/Header';
 
 const mapStateToProps = ({ player: { assertions, score } }) => ({ assertions, score });
 
