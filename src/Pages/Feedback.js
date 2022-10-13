@@ -6,22 +6,34 @@ import Header from '../components/Header';
 const mapStateToProps = ({ player: { assertions, score } }) => ({ assertions, score });
 
 class Feedback extends Component {
+  handlePlayAgain = () => {
+    const { history } = this.props;
+    history.push('/');
+  };
+
   render() {
     const { assertions, score } = this.props;
     const acceptableLimit = 3;
     return (
       <>
         <Header />
-        { assertions >= acceptableLimit
+        {assertions >= acceptableLimit
           ? <h2 data-testid="feedback-text">Well Done!</h2>
           : <h2 data-testid="feedback-text">Could be better...</h2>}
         <div>
           <h3 data-testid="feedback-total-score">
-            { score }
+            {score}
           </h3>
           <h3 data-testid="feedback-total-question">
-            { assertions }
+            {assertions}
           </h3>
+          <button
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ this.handlePlayAgain }
+          >
+            Play Again
+          </button>
         </div>
       </>
     );
@@ -31,6 +43,9 @@ class Feedback extends Component {
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps)(Feedback);
