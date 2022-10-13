@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import { withRouter } from 'react-router-dom';
 
 class Header extends Component {
   handleImg = () => {
@@ -10,6 +11,11 @@ class Header extends Component {
     const generateHash = md5(gravatarEmail).toString();
     const linkImg = `https://www.gravatar.com/avatar/${generateHash}`;
     return linkImg;
+  };
+
+  handleClick = () => {
+    const { history } = this.props;
+    history.push('/ranking');
   };
 
   render() {
@@ -23,6 +29,14 @@ class Header extends Component {
         />
         <span data-testid="header-player-name">{ name }</span>
         <span data-testid="header-score">{ score }</span>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ this.handleClick }
+        >
+          Ranking
+
+        </button>
       </div>
     );
   }
@@ -33,6 +47,9 @@ const mapStateToProps = (state) => ({
 });
 
 Header.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   player: PropTypes.shape({
     name: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
@@ -40,4 +57,4 @@ Header.propTypes = {
   }).isRequired,
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(withRouter(Header));
