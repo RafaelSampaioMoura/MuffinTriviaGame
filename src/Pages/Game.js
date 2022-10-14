@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Timer from '../components/Timer';
 import Header from '../components/Header';
-import { getQuestionsFromApi, submitPlayerScore } from '../redux/actions';
+import {
+  getQuestionsFromApi, submitPlayerScore, submitPlayerRanking } from '../redux/actions';
 
 class Game extends Component {
   state = {
@@ -33,7 +34,6 @@ class Game extends Component {
       history.push('/');
     } else {
       const questionStorage = JSON.parse(localStorage.getItem('questions'));
-
       this.setState({
         questionsLocal: questionStorage,
         loading: true,
@@ -46,7 +46,6 @@ class Game extends Component {
   handleCurrentQuestion = async () => {
     const { questionsLocal, currentQuestionIndex } = this.state;
     const maxQuestions = 5;
-    // console.log(questionsLocal);
     if (currentQuestionIndex < maxQuestions) {
       const answersShuffled = this.shuffleArray([
         questionsLocal[currentQuestionIndex].correct_answer,
@@ -60,7 +59,8 @@ class Game extends Component {
         isActive: false,
       });
     } else {
-      const { history } = this.props;
+      const { history, player, dispatch } = this.props;
+      dispatch(submitPlayerRanking(player));
       history.push('/feedback');
     }
   };
@@ -81,13 +81,11 @@ class Game extends Component {
   };
 
   handlePonctuation = (questionDifficulty, timer) => {
-    // const { isActive } = this.state;
     const { dispatch, score } = this.props;
     const hard = 3;
     const medium = 2;
     const easy = 1;
     let difficultyPoints;
-
     if (questionDifficulty === 'hard') {
       difficultyPoints = hard;
     } else if (questionDifficulty === 'easy') {
@@ -97,11 +95,7 @@ class Game extends Component {
     }
     const basePoints = 10;
     const totalPoints = score + (basePoints + (difficultyPoints * timer));
-    // console.log(questionDifficulty);
-    // console.log(totalPoints);
-    // console.log(score);
     dispatch(submitPlayerScore(totalPoints));
-    // console.log(score);
   };
 
   handleResetCounter = () => {
@@ -132,10 +126,9 @@ class Game extends Component {
     } = this.state;
 
     return (
-      <div className="bg-hero bg-cover w-screen h-screen text-white">
+      <div className="bg-hero bg-cover w-screen h-screen text-white overflow-hidden">
         <Header />
         <div className="flex flex-wrap flex-row w-full h-full mx-0">
-
           {loading && <p>Loading...</p>}
           <div
             className="card flex flex-wrap
@@ -228,19 +221,26 @@ class Game extends Component {
 Game.propTypes = {
   questions: PropTypes.shape({
     questions: PropTypes.arrayOf(PropTypes.shape).isRequired,
-    code: PropTypes.number.isRequired,
+    code: PropTypes.string.isRequired,
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
+  player: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+    assertions: PropTypes.number.isRequired,
+    gravatarEmail: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   questions: state.questionsReducer,
   token: state.tokenReducer.token,
   score: state.player.score,
+  player: state.player,
 });
 
 export default connect(mapStateToProps)(Game);
