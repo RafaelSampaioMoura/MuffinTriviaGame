@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import {
   getQuestionsFromApi, submitPlayerScore, submitPlayerRanking } from '../redux/actions';
 
+
 class Game extends Component {
   state = {
     questionsLocal: [],

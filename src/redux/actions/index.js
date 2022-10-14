@@ -18,6 +18,11 @@ export const submitPlayerScore = (payload) => ({
   payload,
 });
 
+export const submitPlayerRanking = (payload) => ({
+  type: PLAYER_RANKING,
+  payload,
+});
+
 const failureToken = (errorMessage) => ({
   type: FAILURE_TOKEN,
   error: errorMessage,
