@@ -12,6 +12,7 @@ const player = (state = INITIAL_STATE.player, action) => {
   case SUBMIT_PLAYER_SCORE:
     return {
       ...state,
+      ...state.player,
       score: action.payload,
       assertions: state.assertions + 1,
     };
