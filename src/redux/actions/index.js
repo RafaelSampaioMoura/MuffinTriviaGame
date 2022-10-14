@@ -33,11 +33,6 @@ const getQuestions = (payload) => ({
   payload,
 });
 
-export const submitPlayerRanking = (payload) => ({
-  type: PLAYER_RANKING,
-  payload,
-});
-
 export const getQuestionsFromApi = (token) => async (dispatch) => {
   try {
     const URL_QUESTIONS = `https://opentdb.com/api.php?amount=5&token=${token}`;
