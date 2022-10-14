@@ -37,7 +37,11 @@ class Ranking extends Component {
     const { theRankings } = this.state;
     return (
       <div>
-        Ranking:
+        <h1
+          data-testid="ranking-title"
+        >
+          Ranking:
+        </h1>
         {theRankings.length > 0 && theRankings.map((object, index) => (
           <>
             <img src={ `https://www.gravatar.com/avatar/${md5(object.gravatarEmail).toString()}` } alt="Profile" />

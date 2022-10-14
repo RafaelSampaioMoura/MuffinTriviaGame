@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Timer from '../components/Timer';
 import Header from '../components/Header';
-import { getQuestionsFromApi,
-  submitPlayerScore,
-  submitPlayerRanking } from '../redux/actions';
+import {
+  getQuestionsFromApi, submitPlayerScore, submitPlayerRanking } from '../redux/actions';
 
 class Game extends Component {
   state = {
@@ -35,7 +34,6 @@ class Game extends Component {
       history.push('/');
     } else {
       const questionStorage = JSON.parse(localStorage.getItem('questions'));
-
       this.setState({
         questionsLocal: questionStorage,
         loading: true,
@@ -48,7 +46,6 @@ class Game extends Component {
   handleCurrentQuestion = async () => {
     const { questionsLocal, currentQuestionIndex } = this.state;
     const maxQuestions = 5;
-    // console.log(questionsLocal);
     if (currentQuestionIndex < maxQuestions) {
       const answersShuffled = this.shuffleArray([
         questionsLocal[currentQuestionIndex].correct_answer,
@@ -63,7 +60,6 @@ class Game extends Component {
       });
     } else {
       const { history, player, dispatch } = this.props;
-      // console.log(player);
       dispatch(submitPlayerRanking(player));
       history.push('/feedback');
     }
@@ -85,13 +81,11 @@ class Game extends Component {
   };
 
   handlePonctuation = (questionDifficulty, timer) => {
-    // const { isActive } = this.state;
     const { dispatch, score } = this.props;
     const hard = 3;
     const medium = 2;
     const easy = 1;
     let difficultyPoints;
-
     if (questionDifficulty === 'hard') {
       difficultyPoints = hard;
     } else if (questionDifficulty === 'easy') {
@@ -101,11 +95,7 @@ class Game extends Component {
     }
     const basePoints = 10;
     const totalPoints = score + (basePoints + (difficultyPoints * timer));
-    // console.log(questionDifficulty);
-    // console.log(totalPoints);
-    // console.log(score);
     dispatch(submitPlayerScore(totalPoints));
-    // console.log(score);
   };
 
   handleResetCounter = () => {
@@ -136,10 +126,9 @@ class Game extends Component {
     } = this.state;
 
     return (
-      <div className="bg-hero bg-cover w-screen h-screen text-white">
+      <div className="bg-hero bg-cover w-screen h-screen text-white overflow-hidden">
         <Header />
         <div className="flex flex-wrap flex-row w-full h-full mx-0">
-
           {loading && <p>Loading...</p>}
           <div
             className="card flex flex-wrap
